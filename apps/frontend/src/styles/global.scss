@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import './reset.scss';
+
+::-webkit-scrollbar {
+  @apply w-3;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-blue-300;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-800 rounded-2xl;
+}
