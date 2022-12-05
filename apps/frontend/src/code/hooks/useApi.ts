@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { AppApi, Configuration } from '../../api'
+import { Configuration } from '@api/runtime'
 
 /**
  * This configuration is used to initialize AppApi instance.

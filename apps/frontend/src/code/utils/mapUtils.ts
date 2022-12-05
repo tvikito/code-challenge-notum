@@ -1,5 +1,5 @@
+import { NodeDto } from '@api/models'
 import { Tree } from 'src/types'
-import { NodeDto } from '../../api'
 
 /**
  * Function takes nodes, apply coloring "layer" and convert them to tree structure.
