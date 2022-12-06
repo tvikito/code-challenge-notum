@@ -28,6 +28,6 @@
 ## OMG features
 
 - awesome [Tailwind](https://tailwindcss.com/) css framework
-- no need MUI
+- MUI free design
 - custom Button, Input, AlertMessage components which replace MUI
 -

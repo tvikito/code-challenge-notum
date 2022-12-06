@@ -1,11 +1,10 @@
 import { login, Mutations } from '@hooks/useApi'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Button from '@components/Button'
-import Avatar from '@mui/material/Avatar'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 import Input from './Input'
 import MessageAlert from './MessageAlert'
+import LockIcon from './Icons/LockIcon'
 
 const Login: FC = () => {
   const queryClient = useQueryClient()
@@ -26,10 +25,10 @@ const Login: FC = () => {
 
   return (
     <main className='max-w-md flex flex-col mx-auto p-4 w-full text-center items-center'>
-      <Avatar className='text-red-500 bg-slate-800'>
-        <LockOutlinedIcon />
-      </Avatar>
-      <h1 className='text-2xl'>Sign in</h1>
+      <div className='w-12 p-2 rounded-full text-red-500 bg-slate-800'>
+        <LockIcon />
+      </div>
+      <h1 className='text-2xl font-semibold'>Sign in</h1>
 
       <form onSubmit={handleSubmit} className='w-full'>
         <Input
