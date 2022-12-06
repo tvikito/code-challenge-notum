@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { AppApi } from '@api/apis/AppApi'
-import { LoginDto } from '@api/models'
+import { LoginDto, NodeDto } from '@api/models'
 import { Configuration } from '@api/runtime'
 
 /**
@@ -25,6 +25,11 @@ export const setNewApiConfig = (accessToken: string) => (Api = new AppApi(config
 export const login = (credentials: LoginDto) => async () => {
   const result = await Api.appControllerLogin({ LoginDto: credentials })
   setNewApiConfig(result.access_token)
+  return result
+}
+
+export const saveNodes = (nodes: NodeDto[]) => async () => {
+  const result = await Api.appControllerSaveNodes({ NodesDto: { nodes } })
   return result
 }
 
