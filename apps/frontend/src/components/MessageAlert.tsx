@@ -1,4 +1,4 @@
-import AlertIcon from './Icons/AlertIcon'
+import AlertIcon from './icons/AlertIcon'
 
 interface Props {
   children: React.ReactNode

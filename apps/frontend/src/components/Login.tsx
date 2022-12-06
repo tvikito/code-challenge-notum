@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 import Input from './Input'
 import MessageAlert from './MessageAlert'
-import LockIcon from './Icons/LockIcon'
+import LockIcon from './icons/LockIcon'
 
 const Login: FC = () => {
   const queryClient = useQueryClient()
