@@ -3,9 +3,9 @@ import Head from 'next/head'
 import Footer from '@components/Footer'
 import Login from '@components/Login'
 import Map from '@components/Map/Map'
-import { Container } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { login } from '@hooks/useApi'
+import Header from '@components/Header'
 
 const Home: React.FC = () => {
   const loginQuery = useQuery({
@@ -14,24 +14,27 @@ const Home: React.FC = () => {
     enabled: false,
   })
 
-  if (!loginQuery?.data?.access_token)
-    return (
-      <Container component='main' maxWidth='xs'>
-        <Login />
-      </Container>
-    )
+  const isUserLoggedIn = loginQuery?.data?.access_token
 
   return (
     <>
       <Head>
-        <title>Next.js boiler Template</title>
+        <title>🤗 Wonderful nodes 🚀</title>
       </Head>
 
-      <Container component='main'>
-        <Map />
-      </Container>
+      {!isUserLoggedIn ? (
+        <Login />
+      ) : (
+        <>
+          <Header />
 
-      <Footer />
+          <main className='flex flex-col w-full mx-auto px-4'>
+            <Map />
+          </main>
+
+          <Footer />
+        </>
+      )}
     </>
   )
 }
