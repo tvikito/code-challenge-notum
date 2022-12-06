@@ -4,15 +4,15 @@ Welcome to my small app. I dared to remove docker in order to demonstrate whole 
 
 # Setup & run
 
-## Turborepo?
+## Turborepo and pnpm
 
-This repo is build as [Turborepo](https://turbo.build/) and uses [pnpm](https://pnpm.io) as a package manager. To install it run:
+This repo is using [Turborepo](https://turbo.build/) and uses [pnpm](https://pnpm.io) as a package manager. To install it run:
 
 ```
 npm install -g pnpm
 ```
 
-I've used pnpm in order to show speed of pnpm which is much faster package manager then npm.
+I've used pnpm in order to show speed of pnpm which is much faster package manager then npm. Usage for a developer is pretty much the same as npm.
 
 ### Apps
 
@@ -21,19 +21,19 @@ I've used pnpm in order to show speed of pnpm which is much faster package manag
 
 ## Start app
 
-First install all dependencies for backend and frontend. Simply run
+First install all dependencies for backend and frontend. Simply run in root of the project
 
 ```
 pnpm install
 ```
 
-in root of the project. Afterwards, for production run
+Afterwards, with single command you'll start both FE and BE. For production run
 
 ```
 pnpm start
 ```
 
-For development
+for development
 
 ```
 pnpm dev
