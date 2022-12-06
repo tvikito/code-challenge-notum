@@ -4,11 +4,12 @@ type Props = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputE
   label: string
 }
 
-const Input: React.FC<Props> = ({ label, className, ...rest }) => (
+const Input: React.FC<Props> = ({ label, className, value, ...rest }) => (
   <div className={`relative ${className}`}>
     <input
       type='text'
       placeholder='john@doe.com'
+      value={value || ''}
       {...rest}
       id={label}
       name={label}
