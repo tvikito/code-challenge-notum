@@ -9,7 +9,11 @@ const Me: FC = () => {
     retry: false,
   })
 
-  return <span>{data?.username}</span>
+  return (
+    <div>
+      Hi there <span className='font-bold'>{data?.username}!</span>
+    </div>
+  )
 }
 
 export default Me
