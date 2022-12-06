@@ -1,4 +1,4 @@
-import React, { useEffect, FC, createContext, useState, Dispatch, SetStateAction } from 'react'
+import React, { useEffect, FC } from 'react'
 import type { AppProps } from 'next/app'
 import '../styles/global.scss'
 import Head from 'next/head'
@@ -8,13 +8,7 @@ import { useRouter } from 'next/router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-interface ContextLogin {
-  accessToken?: string
-  setAccessToken: Dispatch<SetStateAction<string>>
-}
-
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
-  const [accessToken, setAccessToken] = useState<string | undefined>()
   const router = useRouter()
   const [queryClient] = React.useState(() => new QueryClient())
 
@@ -39,7 +33,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
       </Head>
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={true} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   )
