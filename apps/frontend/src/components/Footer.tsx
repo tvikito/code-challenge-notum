@@ -1,11 +1,11 @@
 import React from 'react'
 
 const Footer: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-  <footer className='bg-slate-800'>
-    <div className='px-5'>
+  <footer className='bg-slate-800 mt-auto'>
+    <div className='px-5 py-6'>
       {children}
 
-      <div className='pb-5 text-gray-400 flex flex-col items-center'>
+      <div className='flex flex-col items-center text-gray-400 '>
         Made by{' '}
         <a
           href='http://tomasvykoukal.com/'
