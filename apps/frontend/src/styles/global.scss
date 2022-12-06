@@ -16,3 +16,7 @@
 ::-webkit-scrollbar-thumb {
   @apply bg-blue-800 rounded-2xl;
 }
+
+#__next {
+  @apply h-screen flex flex-col;
+}

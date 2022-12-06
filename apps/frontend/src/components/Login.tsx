@@ -1,11 +1,11 @@
 import { login, Mutations } from '@hooks/useApi'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { Alert, Button, TextField } from '@mui/material'
+import Button from '@components/Button'
 import Avatar from '@mui/material/Avatar'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FC, useState } from 'react'
+import Input from './Input'
+import MessageAlert from './MessageAlert'
 
 const Login: FC = () => {
   const queryClient = useQueryClient()
@@ -19,63 +19,48 @@ const Login: FC = () => {
     },
   })
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    mutate()
+  }
+
   return (
-    <Box
-      sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+    <main className='max-w-md flex flex-col mx-auto p-4 w-full text-center items-center'>
+      <Avatar className='text-red-500 bg-slate-800'>
         <LockOutlinedIcon />
       </Avatar>
-      <Typography component='h1' variant='h5'>
-        Sign in
-      </Typography>
+      <h1 className='text-2xl'>Sign in</h1>
 
-      <TextField
-        id='outlined-basic'
-        label='Username'
-        variant='outlined'
-        fullWidth
-        required
-        className='mt-6'
-        onChange={({ currentTarget: { value } }) => setUsername(value)}
-        value={username}
-      />
+      <form onSubmit={handleSubmit} className='w-full'>
+        <Input
+          label='Username'
+          className='mt-9 w-full'
+          required
+          onChange={({ currentTarget: { value } }) => setUsername(value)}
+          value={username}
+        />
 
-      <TextField
-        id='outlined-basic'
-        label='Password'
-        variant='outlined'
-        fullWidth
-        required
-        className='mt-6'
-        type='password'
-        onChange={({ currentTarget: { value } }) => setPassword(value)}
-        value={password}
-      />
+        <Input
+          label='Password'
+          required
+          className='mt-9 w-full'
+          type='password'
+          onChange={({ currentTarget: { value } }) => setPassword(value)}
+          value={password}
+        />
 
-      {isError && (
-        <Alert severity='error' className='w-full mt-6'>
-          Invalid credentials
-        </Alert>
-      )}
+        {isError && <MessageAlert className='mt-11'>Invalid credentials</MessageAlert>}
 
-      <Button
-        disabled={isLoading || !password || !username}
-        onClick={() => mutate()}
-        variant='contained'
-        fullWidth
-        className='mt-6'
-        color='primary'
-        size='large'
-      >
-        Contained
-      </Button>
-    </Box>
+        <Button
+          type='submit'
+          disabled={isLoading || !password || !username}
+          onClick={handleSubmit}
+          className='w-full mt-6'
+        >
+          Login
+        </Button>
+      </form>
+    </main>
   )
 }
 
