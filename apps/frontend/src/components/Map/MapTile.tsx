@@ -1,4 +1,7 @@
+import { NodeDto } from '@api/models'
 import { Box } from '@mui/material'
+import { FC } from 'react'
+import MapTileActions from './MapTileActions'
 
 /**
  * Component for displaying a single tile on the map. Tile represents one node.
@@ -7,7 +10,12 @@ import { Box } from '@mui/material'
  *  - On tile click the node should become active. If the node is already active, it should become inactive.
  *  - If the tile is active, it has red border and we see its description and `<MapTileActions />` component.
  */
-export default function MapTile() {
+
+interface Props {
+  node: NodeDto
+}
+
+const MapTile: FC<Props> = ({ node }) => {
   return (
     <Box
       sx={{
@@ -23,6 +31,11 @@ export default function MapTile() {
         m: '4px',
         cursor: 'pointer',
       }}
-    ></Box>
+    >
+      {node.id} {node.description}
+      <MapTileActions />
+    </Box>
   )
 }
+
+export default MapTile

@@ -1,4 +1,5 @@
 import { Box, Button, TextField } from '@mui/material'
+import { FC } from 'react'
 
 /**
  * Component for displaying actions for a single tile on the map. The user can:
@@ -7,7 +8,9 @@ import { Box, Button, TextField } from '@mui/material'
  *      -  ID of new node is incremented automatically (e.g. if the latest node has ID 1, the new node will have ID 2)
  *  - change color of the node
  */
-export default function MapTileActions() {
+interface Props {}
+
+const MapTileActions: FC<Props> = () => {
   return (
     <Box sx={{ display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'center', gap: '10px' }}>
       <Button variant='contained' size='small'>
@@ -28,3 +31,5 @@ export default function MapTileActions() {
     </Box>
   )
 }
+
+export default MapTileActions

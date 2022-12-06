@@ -1,17 +1,23 @@
+import { login, Mutations } from '@hooks/useApi'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { Alert, Button, TextField } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 
-/**
- * Component for displaying the login form. It has 2 text fields for username and password and a button for submitting the form.
- * If the login is not successful, there should be message "Invalid credentials.".
- */
 const Login: FC = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const queryClient = useQueryClient()
+  const [username, setUsername] = useState('notum')
+  const [password, setPassword] = useState('toMoon')
+
+  const { mutate, isLoading, isError } = useMutation({
+    mutationFn: login({ username, password }),
+    onSuccess: (data) => {
+      queryClient.setQueryData([Mutations.login], data)
+    },
+  })
 
   return (
     <Box
@@ -52,12 +58,15 @@ const Login: FC = () => {
         value={password}
       />
 
-      <Alert severity='error' className='w-full mt-6'>
-        Invalid credentials
-      </Alert>
+      {isError && (
+        <Alert severity='error' className='w-full mt-6'>
+          Invalid credentials
+        </Alert>
+      )}
 
       <Button
-        disabled={!password || !username}
+        disabled={isLoading || !password || !username}
+        onClick={() => mutate()}
         variant='contained'
         fullWidth
         className='mt-6'

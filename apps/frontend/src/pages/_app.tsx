@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from 'react'
+import React, { useEffect, FC, createContext, useState, Dispatch, SetStateAction } from 'react'
 import type { AppProps } from 'next/app'
 import '../styles/global.scss'
 import Head from 'next/head'
@@ -6,10 +6,15 @@ import CustomHead from '@components/CustomHead'
 import { pageview } from 'src/lib/gtag'
 import { useRouter } from 'next/router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ThemeProvider } from '@mui/material'
-import theme from 'src/lib/muiTheme'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
+interface ContextLogin {
+  accessToken?: string
+  setAccessToken: Dispatch<SetStateAction<string>>
+}
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+  const [accessToken, setAccessToken] = useState<string | undefined>()
   const router = useRouter()
   const [queryClient] = React.useState(() => new QueryClient())
 
@@ -32,11 +37,10 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
       <Head>
         <CustomHead />
       </Head>
-      <ThemeProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
-        </QueryClientProvider>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </QueryClientProvider>
     </>
   )
 }
