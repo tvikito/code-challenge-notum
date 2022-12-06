@@ -1,5 +1,4 @@
 import { NodeDto } from '@api/models'
-import { Box } from '@mui/material'
 import { FC } from 'react'
 import MapTileActions from './MapTileActions'
 
@@ -13,28 +12,45 @@ import MapTileActions from './MapTileActions'
 
 interface Props {
   node: NodeDto
+  nodes: NodeDto[]
+  addNode: (node: Omit<NodeDto, 'id'>) => void
+  deleteNode: (id: number) => void
+  setNodeColor: (id: number, color: string) => void
+  setNodeOpenId: (id: number) => void
+  nodeOpenId: number
 }
 
-const MapTile: FC<Props> = ({ node }) => {
+const MapTile: FC<Props> = ({ node, nodes, addNode, deleteNode, setNodeColor, setNodeOpenId, nodeOpenId }) => {
+  const childrenNodes = nodes.filter((n) => n.parentId === node.id)
+
+  const isOpen = nodeOpenId === node.id
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-        position: 'relative',
-        fontSize: 15,
-        borderRadius: 2,
-        p: '5px',
-        minHeight: '30px',
-        m: '4px',
-        cursor: 'pointer',
-      }}
-    >
-      {node.id} {node.description}
-      <MapTileActions />
-    </Box>
+    <div className='flex flex-col flex-1'>
+      <div
+        className='flex-1 border-slate-800 border rounded-lg justify-center items-center text-center mt-2 cursor-pointer'
+        style={{ backgroundColor: node.color || '#fff' }}
+      >
+        <div className='p-3 font-bold ' onClick={() => setNodeOpenId(node.id)}>
+          {node.id} {!!childrenNodes.length && `(${childrenNodes.length})`}
+        </div>
+        {isOpen && <MapTileActions node={node} addNode={addNode} deleteNode={deleteNode} setNodeColor={setNodeColor} />}
+      </div>
+      <div className='flex gap-1 items-start'>
+        {childrenNodes.map((n) => (
+          <MapTile
+            key={n.id}
+            node={n}
+            addNode={addNode}
+            deleteNode={deleteNode}
+            nodes={nodes}
+            setNodeColor={setNodeColor}
+            setNodeOpenId={setNodeOpenId}
+            nodeOpenId={nodeOpenId}
+          />
+        ))}
+      </div>
+    </div>
   )
 }
 
