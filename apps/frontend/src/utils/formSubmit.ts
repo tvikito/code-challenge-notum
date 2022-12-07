@@ -7,27 +7,25 @@ import { FormEvent } from 'react'
  * @param {string} [method=post] the method to use on the form
  */
 
-export const submitForm =
-  (path: string, params: { [key: string]: string }) =>
-  (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+export const submitForm = (path: string, params: { [key: string]: string }) => (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
 
-    const form = document.createElement('form')
-    form.method = 'post'
-    form.action = path
+  const form = document.createElement('form')
+  form.method = 'post'
+  form.action = path
 
-    for (const key in params) {
-      if (params.hasOwnProperty(key)) {
-        const hiddenField = document.createElement('input')
-        hiddenField.type = 'hidden'
-        hiddenField.name = key
-        hiddenField.value = params[key]
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const hiddenField = document.createElement('input')
+      hiddenField.type = 'hidden'
+      hiddenField.name = key
+      hiddenField.value = params[key]
 
-        form.appendChild(hiddenField)
-      }
+      form.appendChild(hiddenField)
     }
-
-    document.body.appendChild(form)
-    form.setAttribute('target', '_blank')
-    form.submit()
   }
+
+  document.body.appendChild(form)
+  form.setAttribute('target', '_blank')
+  form.submit()
+}
