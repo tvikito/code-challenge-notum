@@ -11,7 +11,7 @@ const Me: FC = () => {
 
   return (
     <div>
-      Hi there <span className='font-bold'>{data?.username}!</span>
+      Hi there <span className='font-bold'>{data?.username}</span>!
     </div>
   )
 }
