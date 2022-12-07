@@ -1,20 +1,16 @@
-import React from 'react'
 import Head from 'next/head'
 import Footer from '@components/Footer'
-import Login from '@components/Login'
 import Map from '@components/Map/Map'
-import { useQuery } from '@tanstack/react-query'
-import { login } from '@hooks/useApi'
 import Header from '@components/Header'
+import { GetServerSideProps } from 'next'
+import { useApi } from '@hooks/useApi'
 
-const Home: React.FC = () => {
-  const loginQuery = useQuery({
-    queryKey: ['login'],
-    queryFn: login({ username: 'username', password: 'password' }),
-    enabled: false,
-  })
+interface Props {
+  accessToken: string
+}
 
-  const isUserLoggedIn = loginQuery?.data?.access_token
+const Home: React.FC<Props> = ({ accessToken }) => {
+  const { getNodes, saveNodes, getMe } = useApi(accessToken)
 
   return (
     <>
@@ -22,21 +18,34 @@ const Home: React.FC = () => {
         <title>🤗 Wonderful nodes 🚀</title>
       </Head>
 
-      {!isUserLoggedIn ? (
-        <Login />
-      ) : (
-        <>
-          <Header />
+      <Header getMe={getMe} />
 
-          <main className='flex flex-col w-full mx-auto px-4'>
-            <Map />
-          </main>
+      <main className='flex flex-col w-full mx-auto px-4'>
+        <Map getNodes={getNodes} saveNodes={saveNodes} />
+      </main>
 
-          <Footer />
-        </>
-      )}
+      <Footer />
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { accessToken } = context.req.cookies
+
+  if (!accessToken) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      accessToken,
+    },
+  }
 }
 
 export default Home

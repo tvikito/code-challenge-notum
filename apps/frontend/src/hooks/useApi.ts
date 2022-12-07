@@ -11,31 +11,7 @@ const config = (accessToken?: string) =>
     basePath: 'http://localhost:3002',
     accessToken,
     credentials: 'same-origin',
-    headers: accessToken
-      ? {
-          Authorization: 'Bearer ' + accessToken,
-        }
-      : {},
   })
-
-let Api = new AppApi(config())
-
-export const setNewApiConfig = (accessToken: string) => (Api = new AppApi(config(accessToken)))
-
-export const login = (credentials: LoginDto) => async () => {
-  const result = await Api.appControllerLogin({ LoginDto: credentials })
-  setNewApiConfig(result.access_token)
-  return result
-}
-
-export const saveNodes = (nodes: NodeDto[]) => async () => {
-  const result = await Api.appControllerSaveNodes({ NodesDto: { nodes } })
-  return result
-}
-
-export const getMe = async () => await Api.appControllerGetMe()
-
-export const getNodes = async () => await Api.appControllerGetNodes()
 
 /**
  * Try to use https://tanstack.com/query/v4 to fetch data from API.
@@ -55,4 +31,26 @@ export enum Mutations {
   'login' = 'login',
   // save nodes to API (AppApi.appControllerSaveNodes())
   'saveNodes' = 'saveNodes',
+}
+
+export const useApi = (accessToken?: string) => {
+  const Api = new AppApi(config(accessToken))
+
+  const login = async (credentials: LoginDto) => {
+    const result = await Api.appControllerLogin({ LoginDto: credentials })
+    return result
+  }
+
+  const saveNodes = (nodes: NodeDto[]) => async () => {
+    const result = await Api.appControllerSaveNodes({ NodesDto: { nodes } })
+    return result
+  }
+
+  const getMe = async () => await Api.appControllerGetMe({})
+
+  const getNodes = async () => {
+    return await Api.appControllerGetNodes()
+  }
+
+  return { login, saveNodes, getMe, getNodes, accessToken }
 }

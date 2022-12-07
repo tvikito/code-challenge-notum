@@ -14,7 +14,7 @@
 ## Features
 
 - 👍 login (with error handling)
-- remember logged user between page reloads
+- 👍 remember logged user between page reloads
 - 👍 show username of logged user
 - 👍 load nodes from server
 - 👍 save nodes to server

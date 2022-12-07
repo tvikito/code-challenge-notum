@@ -1,11 +1,16 @@
-import { NodeDto } from '@api/models'
+import { NodeDto, NodesDto } from '@api/models'
 import Button from '@components/Button'
-import { getNodes, Queries, saveNodes } from '@hooks/useApi'
+import { Queries, useApi } from '@hooks/useApi'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import MapTile from './MapTile'
 
-export default function Map() {
+interface Props {
+  getNodes: () => Promise<NodesDto>
+  saveNodes: (nodes: NodeDto[]) => () => Promise<NodesDto>
+}
+
+const Map: React.FC<Props> = ({ getNodes, saveNodes }) => {
   const [currentNodes, setCurrentNodes] = useState<NodeDto[]>([])
   const [nodeOpenId, setNodeOpenId] = useState<number>()
   const { isFetching, refetch } = useQuery({
@@ -112,3 +117,5 @@ export default function Map() {
     </div>
   )
 }
+
+export default Map

@@ -1,26 +1,31 @@
-import { login, Mutations } from '@hooks/useApi'
-import Button from '@components/Button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { FC, useState } from 'react'
-import Input from './Input'
-import MessageAlert from './MessageAlert'
-import LockIcon from './icons/LockIcon'
+import { Mutations, useApi } from '@hooks/useApi'
+import { useState } from 'react'
+import Button from '@components/Button'
+import LockIcon from '@components/icons/LockIcon'
+import Input from '@components/Input'
+import MessageAlert from '@components/MessageAlert'
+import { useRouter } from 'next/router'
 
-const Login: FC = () => {
+const Login: React.FC = () => {
+  const { login } = useApi()
+  const router = useRouter()
   const queryClient = useQueryClient()
   const [username, setUsername] = useState('notum')
   const [password, setPassword] = useState('toMoon')
 
   const { mutate, isLoading, isError } = useMutation({
-    mutationFn: login({ username, password }),
+    mutationFn: login,
     onSuccess: (data) => {
+      document.cookie = `accessToken=${data.access_token}`
       queryClient.setQueryData([Mutations.login], data)
+      router.push('/')
     },
   })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    mutate()
+    mutate({ username, password })
   }
 
   return (
