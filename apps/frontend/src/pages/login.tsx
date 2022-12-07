@@ -6,6 +6,7 @@ import LockIcon from '@components/icons/LockIcon'
 import Input from '@components/Input'
 import MessageAlert from '@components/MessageAlert'
 import { useRouter } from 'next/router'
+import { accessTokenCookie } from '@utils/constants'
 
 const Login: React.FC = () => {
   const { login } = useApi()
@@ -17,7 +18,7 @@ const Login: React.FC = () => {
   const { mutate, isLoading, isError } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      document.cookie = `accessToken=${data.access_token}`
+      document.cookie = `${accessTokenCookie}=${data.access_token}`
       queryClient.setQueryData([Mutations.login], data)
       router.push('/')
     },
