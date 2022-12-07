@@ -26,6 +26,8 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
     }
   }, [router.events])
 
+  const isDev = process.env.NODE_ENV === 'development'
+
   return (
     <>
       <Head>
@@ -33,7 +35,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
       </Head>
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {isDev && <ReactQueryDevtools initialIsOpen={false} />}
       </QueryClientProvider>
     </>
   )

@@ -30,4 +30,6 @@
 - awesome [Tailwind](https://tailwindcss.com/) css framework
 - MUI free design
 - custom Button, Input, AlertMessage components which replace MUI
--
+- log out feature
+- nicer design
+- React Query dev tools
