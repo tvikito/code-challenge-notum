@@ -7,6 +7,7 @@ import Input from '@components/Input'
 import MessageAlert from '@components/MessageAlert'
 import { useRouter } from 'next/router'
 import { accessTokenCookie } from '@utils/constants'
+import { GetServerSideProps } from 'next'
 
 const Login: React.FC = () => {
   const { login } = useApi()
@@ -69,4 +70,20 @@ const Login: React.FC = () => {
   )
 }
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { accessToken } = context.req.cookies
+
+  if (accessToken) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
+}
 export default Login

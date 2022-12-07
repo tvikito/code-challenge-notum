@@ -10,7 +10,7 @@ interface Props {
 
 const Header: React.FC<Props> = ({ getMe }) => {
   const router = useRouter()
-  const { isFetching, isError, data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: [Queries.me],
     queryFn: getMe,
     retry: false,
